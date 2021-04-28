@@ -13,7 +13,7 @@ codespell = "*"
 
 [packages]
 mne-bids = ">=0.7"
-mne = ">=0.22"
+mne = ">=0.23"
 vtk = "*"
 pyvista = "*"
 pyqt5 = "*"

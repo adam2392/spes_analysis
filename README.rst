@@ -1,8 +1,8 @@
-sickkids Dataset
+SPES JHU Dataset
 ----------------
 * Version=v1.0.0
 
-For analysis of sickkids dataset
+For analysis of SPES JHU dataset
 This repo will be used as a light-weight script to be used to convert
 files from the SickKids dataset into the BIDS-compliant layout with
 BrainVision data format (`.vhdr`, `.vmrk`, `.eeg`).
@@ -82,25 +82,6 @@ You need to install ipykernel to expose your conda environment to jupyter notebo
 Jupyter extension for auto-formatting:
 
     - https://github.com/dnanhkhoa/nb_black
-
-Study Organization
-==================
-To perform the study, we first took datasets and converted to a standard BIDS-compliant dataset. Our focus was
-the i) sickkids dataset, ii) the TVB simulation dataset and iii) the openneuro dataset.
-
-First, one can use `dataset/pull_openneuro.py` to pull openneuro data, or just go to the website and download
-dataset ``ds003400``.
-
-Second, one can run the `bids/scripts/run_bids_conversion.py` scripts to convert to BIDS. Note, that you might
-need to modify some parameters to specify which dataset you are converting. In `bids/`, there are files that
-specify the BIDS metadata to help formulate the dataset.
-
-Third, one can run analyses on the datasets. One can run `fragility/`, or `tfr/` for neural fragility, or
-time-frequency representation analyses, respectively.
-
-Fourth, one can run TVB simulation using the `tvb/` scripts.
-
-Finally, `posthoc/` contains scripts to help generate statistical and quantitative analyses.
 
 Figures and Jupyter Notebooks
 -----------------------------

@@ -2,7 +2,7 @@
 PYTHON ?= python
 PYTESTS ?= pytest
 CODESPELL_SKIPS ?= "doc/auto_*,*.fif,*.eve,*.gz,*.tgz,*.zip,*.mat,*.stc,*.label,*.w,*.bz2,*.annot,*.sulc,*.log,*.local-copy,*.orig_avg,*.inflated_avg,*.gii,*.pyc,*.doctree,*.pickle,*.inv,*.png,*.edf,*.touch,*.thickness,*.nofix,*.volume,*.defect_borders,*.mgh,lh.*,rh.*,COR-*,FreeSurferColorLUT.txt,*.examples,.xdebug_mris_calc,bad.segments,BadChannels,*.hist,empty_file,*.orig,*.js,*.map,*.ipynb,searchindex.dat,install_mne_c.rst,plot_*.rst,*.rst.txt,c_EULA.rst*,*.html,gdf_encodes.txt,*.svg"
-CODESPELL_DIRS ?= analysis/ doc/ tutorials/ examples/ tests/
+CODESPELL_DIRS ?= spes/ doc/ tutorials/ examples/ tests/
 
 all: clean inplace test
 
@@ -16,7 +16,7 @@ clean-so:
 
 clean-build:
 	rm -rf _build
-	rm -rf analysis.egg-info
+	rm -rf spes.egg-info
 
 clean-ctags:
 	rm -f tags
@@ -67,19 +67,6 @@ pycodestyle:
 	@echo "Running pycodestyle"
 	@pycodestyle
 
-push-marcc:
-	rsync -aP $(LOCALDIR) $(MARCCDIR);
-
-push-external:
-#	rsync -aP $(LOCALDIR) $(EXTERNALDIR) --exclude='*/tempdir/';
-	rsync -aP $(LOCAL_RESULTSDIR) $(EXTERNAL_RESULTSDIR);
-
-pull-marcc:
-	rsync -aP $(MARCCDIR) $(LOCALDIR);
-
-pull-external:
-	rsync -aP $(EXTERNALDIR) $(LOCALDIR) --exclude='*/tempdir/';
-
 check-manifest:
 	check-manifest --ignore .circleci*,doc,benchmarks,notebooks,data,tests
 
@@ -100,7 +87,7 @@ black:
 mypy:
 	@if command -v mypy > /dev/null; then \
 		echo "Running mypy"; \
-		mypy --check analysis; \
+		mypy --check spes; \
 	else \
 		echo "mypy not found, please install it!"; \
 		exit 1; \
@@ -109,6 +96,3 @@ mypy:
 
 check:
 	@$(MAKE) -k black pydocstyle codespell-error
-
-ssh:
-	$(ssh) $(remote)
