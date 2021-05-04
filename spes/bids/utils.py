@@ -157,7 +157,7 @@ def _check_bids_parameters(bids_kwargs: Dict) -> Dict:
 
 
 def _look_for_bad_channels(
-    ch_names, bad_markers: List[str] = ChannelMarkers.BAD_MARKERS.name
+    ch_names, bad_markers: List[str] = ChannelMarkers.BAD_MARKERS.value
 ):
     """Looks for hardcoding of what are "bad ch_names".
 
@@ -187,7 +187,7 @@ def _look_for_bad_channels(
     #   bad_channels.extend([ch for ch in ch_names if re.search("[bad_marker]", ch])
     if "$" in bad_markers:
         # look for ch_names with '$'
-        bad_channels.extend([ch for ch in ch_names if re.search("[$]", ch)])
+        bad_channels.extend([ch for ch in ch_names if '$' in ch])
     if "FZ" in bad_markers:
         badname = "FZ"
         bad_channels.extend([ch for ch in ch_names if ch == badname])

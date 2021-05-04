@@ -1,20 +1,16 @@
-import collections
+import os
 import os
 import random
 from pathlib import Path
+from typing import Dict
 
-import mne
-import numpy as np
-import pandas as pd
 from eztrack.preprocess.bids_conversion import (
     append_original_fname_to_scans,
-    _update_sidecar_tsv_byname,
 )
-from mne.channels import make_dig_montage
 from mne.io import read_raw_edf
 from mne_bids import write_raw_bids, read_raw_bids, get_anonymization_daysback
 from mne_bids.path import BIDSPath, _find_matching_sidecar
-from typing import Dict
+from natsort import natsorted
 
 from spes.bids.dataset.jhu import (
     _set_ch_types,
@@ -87,6 +83,7 @@ def write_edf_to_bids(
 
     # look for bad channels
     bad_chs = _look_for_bad_channels(raw.ch_names)
+    print(f'Found bad channels: {bad_chs}')
     raw.info["bads"].extend(bad_chs)
 
     if dataset_name == "jhu":
@@ -145,7 +142,14 @@ def convert_jhu_dataset():
     overwrite = True
     verbose = True
 
-    subject_ids = [fdir.name for fdir in source_dir.glob('PY*') if fdir.is_dir()]
+    ignore_subjects = [
+        'PY16N008',
+        'PY16N011', 'PY17N002'
+        'PY17N008'
+    ]
+
+    subject_ids = natsorted([fdir.name for fdir in source_dir.glob('PY*') if fdir.is_dir()])
+    subject_ids = [s for s in subject_ids if s not in ignore_subjects]
     print(subject_ids)
     participants_json_fname = os.path.join(bids_root, "participants.json")
     participants_tsv_fname = os.path.join(bids_root, "participants.tsv")
